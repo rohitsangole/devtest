@@ -5,6 +5,10 @@ phases:
     runtime-versions:
       python: 3.8  # Change to your preferred runtime
     commands:
+      - echo Updating the instance...
+      - yum update -y
+      - echo Installing Python...
+      - yum install -y python38
       - echo Installing Terraform...
       - curl -o terraform.zip https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip
       - unzip terraform.zip
@@ -13,10 +17,14 @@ phases:
     commands:
       - echo Initializing Terraform...
       - terraform init
+      - echo Validating Terraform configuration...
+      - terraform validate
+      - echo Planning Terraform deployment...
+      - terraform plan -out=tfplan
   build:
     commands:
       - echo Applying Terraform configuration...
-      - terraform apply --auto-approve
+      - terraform apply -auto-approve tfplan
   post_build:
     commands:
       - echo Terraform apply completed.
@@ -25,4 +33,3 @@ artifacts:
   files:
     - '**/*'
   discard-paths: yes
-
