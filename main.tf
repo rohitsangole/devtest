@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "rohit" {
-  ami           = "ami-0c55b159cbfafe1f0" 
+  ami           = "ami-055e3d4f0bbeb5878" 
   instance_type = "t2.micro"
 
   tags = {
